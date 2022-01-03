@@ -8,7 +8,7 @@ let repo = "bitburner";
 let prefixDirectory = '/${owner}/${repo}';
 
 // probably no changes here
-let configFileName = 'git_fetch.txt';
+let configFileName = 'download_list.txt';
 let baseURL = 'https://raw.githubusercontent.com/';
 let branch = 'main';
 
@@ -18,17 +18,17 @@ export async function main(ns) {
 	if (ns.getHostname() !== 'home') {
 		throw new Error('Run the script from home');
 	}
-	
-	if(prefixDirectory){
-		if(!prefixDirectory.endsWith('/')) prefixDirectory += '/';
-		if(prefixDirectory[0] !== '/') prefixDirectory = '/' + prefixDirectory;
+
+	if (prefixDirectory) {
+		if (!prefixDirectory.endsWith('/')) prefixDirectory += '/';
+		if (prefixDirectory[0] !== '/') prefixDirectory = '/' + prefixDirectory;
 	}
 
 	for (let i in filesToDownload) {
 		let filename = filesToDownload[i];
 		try {
 			await getFileFromGH(ns, filename);
-			ns.tprint(`Installed: ${filename} [${Number(i)+1}/${filesToDownload.length}]`);
+			ns.tprint(`Installed: ${filename} [${Number(i) + 1}/${filesToDownload.length}]`);
 		} catch (e) {
 			ns.tprint(`ERROR: tried to download ${filename}: `, e.message);
 			throw e;
@@ -43,7 +43,7 @@ async function fetchConfig(ns) {
 		await getFileFromGH(ns, configFileName);
 		let json = ns.read(configFileName);
 		return JSON.parse(json);
-	}catch(e){
+	} catch (e) {
 		ns.tprint(`ERROR: Downloading and reading config file failed ${configFileName}`);
 		throw e;
 	}
@@ -51,17 +51,17 @@ async function fetchConfig(ns) {
 
 async function getFileFromGH(ns, filepath) {
 	let saveFilepath = prefixDirectory + filepath;
-	
+
 	await ns.scriptKill(saveFilepath, 'home')
 	await ns.rm(saveFilepath)
 	await ns.sleep(20)
-	
+
 	await githubReq(ns, filepath, saveFilepath);
 }
 
 async function githubReq(ns, filepath, saveFilepath) {
 	let url = baseURL + owner + "/" + repo + "/" + branch + "/" + filepath;
-	
-	ns.print("Request to: "+url);
+
+	ns.print("Request to: " + url);
 	await ns.wget(url, saveFilepath)
 }

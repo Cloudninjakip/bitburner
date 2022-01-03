@@ -12,4 +12,5 @@
 		"primer/primerv2.js",
 		"utils/get_server_stats.js",
 		"utils/running_scripts.js"
+		]
 }
