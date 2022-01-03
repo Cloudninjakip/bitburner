@@ -1,0 +1,15 @@
+{
+	"filesToDownload": [
+		"base/distribute_scripts.js",
+		"base/grow.js",
+		"base/hack.js",
+		"base/weak.js",
+		"batcher/batch_manager.js",
+		"batcher/single_batch.js",
+		"misc/buy_servers.js",
+		"misc/open_servers.js",
+		"primer/prime_manager.js",
+		"primer/primerv2.js",
+		"utils/get_server_stats.js",
+		"utils/running_scripts.js"
+}
