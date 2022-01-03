@@ -7,7 +7,7 @@ export async function main(ns) {
 	var WGScriptSize = 1.8;
 	var minSecLvl = ns.getServerMinSecurityLevel(target);
 	var maxMoney = ns.getServerMaxMoney(target);
-	var targetMoneyPercentage = 0.75;
+	var targetMoneyPercentage = 0.80;
 	var serversSeen = ns.getPurchasedServers(); 
 	var securityThresh = minSecLvl;
 
@@ -40,33 +40,15 @@ export async function main(ns) {
 	var growDelay = weakTime - growTime - timeDelay;
 	var weak2Delay = timeDelay * 2;
 
-	var distributedWeakThreads = Math.ceil(weakThreads / pservCount);
-	var distributedGrowThreads = Math.ceil(growThreads / pservCount);
-	var distributedHackThreads = Math.ceil(hackThreads / pservCount);
-
-
-	ns.print(`Available threads: ${availableThreads}`);
-	ns.print(`Hacking for: ${hackValue}`);
-	ns.print(`Weak threads: ${weakThreads}`);
-	ns.print(`Grow threads: ${growThreads}`);
-	ns.print(`Hack threads: ${hackThreads}`);
-	ns.print(`Growth ratio: ${growRatio}`);
-	ns.print(`Dist weak threads: ${distributedWeakThreads}`);
-	ns.print(`Dist grow threads: ${distributedGrowThreads}`);
-	ns.print(`Hack grow threads: ${distributedHackThreads}`);
-	ns.print(`Weak time: ${ns.nFormat(weakTime / 1000, "00:00:00")}`);
-	ns.print(`Grow time: ${ns.nFormat(growTime / 1000, "00:00:00")}`);
-	ns.print(`Hack time: ${ns.nFormat(hackTime / 1000, "00:00:00")}`);
-
 	var randomArg = Math.random();
 	var delay = ns.args[1] * (4 * 25 * timeDelay); // Script count * pserv count * timeDelay
 	if (weakThreads > 0) {
 		for (let i = 0; i < pservCount; i++) {
 			var curServ = serversSeen[i];
-			ns.exec("base/weak.js", curServ, distributedWeakThreads, target, weak1Delay + delay, randomArg);
-			ns.exec("base/weak.js", curServ, distributedWeakThreads, target, weak2Delay + delay, randomArg);
-			ns.exec("base/hack.js", curServ, distributedHackThreads, target, hackDelay + delay, randomArg);
-			ns.exec("base/grow.js", curServ, distributedGrowThreads, target, growDelay + delay, randomArg);
+			ns.exec("base/weak.js", curServ, weakThreads, target, weak1Delay + delay, randomArg);
+			ns.exec("base/weak.js", curServ, weakThreads, target, weak2Delay + delay, randomArg);
+			ns.exec("base/hack.js", curServ, hackThreads, target, hackDelay + delay, randomArg);
+			ns.exec("base/grow.js", curServ, growThreads, target, growDelay + delay, randomArg);
 			delay += timeDelay * 4
 		}
 	}
