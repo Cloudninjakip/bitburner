@@ -1,11 +1,11 @@
 // from https://github.com/lethern/Bitburner_git_fetch
 
 // if your github is https://github.com/Bob/Bitburner_lib, owner is Bob and repo is Bitburner_lib
-let owner = "raklord";
+let owner = "RakLord";
 let repo = "bitburner";
 
 // if you want your files to be saved nested in a directory, type it here. Or leave it empty
-let prefixDirectory = '/${owner}/${repo}';
+let prefixDirectory = '/RakLord/bitburner';
 
 // probably no changes here
 let configFileName = 'download_list.txt';
