@@ -5,7 +5,7 @@ let owner = "RakLord";
 let repo = "bitburner";
 
 // if you want your files to be saved nested in a directory, type it here. Or leave it empty
-let prefixDirectory = '/RakLord/bitburner';
+let prefixDirectory = '/bitburner';
 
 // probably no changes here
 let configFileName = 'download_list.txt';
